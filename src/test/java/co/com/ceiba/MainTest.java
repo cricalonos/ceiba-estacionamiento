@@ -19,4 +19,10 @@ public class MainTest {
 		Assert.assertEquals(4, result);
 	}
 
+	@Test
+	public void test2() {
+		int result = main.sumarNumeros(4, 4);
+		Assert.assertEquals(8, result);
+	}
+
 }
