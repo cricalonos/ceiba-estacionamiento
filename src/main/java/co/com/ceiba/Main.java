@@ -9,13 +9,9 @@ package co.com.ceiba;
 public class Main {
 
 	public static void main(String[] args) {
-		Main main = new Main();
-		int resultado = main.sumarNumeros(2, 2);
+		Suma suma = new Suma();
+		int resultado = suma.sumarNumeros(2, 2);
 		System.out.println(resultado);
-	}
-
-	public int sumarNumeros(int primerNumero, int segundoNumero) {
-		return primerNumero + segundoNumero;
 	}
 
 }

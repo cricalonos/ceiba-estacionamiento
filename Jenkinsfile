@@ -23,18 +23,19 @@ pipeline {
 		stage('Checkout') {
 			steps{
 				echo "------------>Checkout<------------"
-				checkout([$class: 'GitSCM', branches: [[name: '*/master']],
-				doGenerateSubmoduleConfigurations: false, extensions: [], gitTool:
-				'Git_Centos', submoduleCfg: [], userRemoteConfigs: [[credentialsId:
-				'GitHub_cricalonos', url:
-				'https://github.com/cricalonos/ceiba-estacionamiento']]])
+				git branch: 'develop', credentialsId: 'GitHub_cricalonos', url: 'https://github.com/cricalonos/ceiba-estacionamiento'
+				
+				sh 'gradle clean'
 			}
 		}
 		stage('Unit Tests') {
+		
 			steps{
-				echo "------------>Unit Tests<------------"
-				sh 'gradle --b ./build.gradle test'
-			}
+                echo "------------>Unit Tests<------------"
+                sh 'gradle test'
+                junit '**/build/test-results/test/*.xml' //aggregate test results - JUnit
+                jacoco classPattern: '**/build/classes/java', execPattern: '**/build/jacoco/test.exec', sourcePattern: '**/src/main/java'
+            }
 		}
 		stage('Integration Tests') {
 			steps {
@@ -45,7 +46,7 @@ pipeline {
 			steps{
 				echo "------------>Build<------------"
 				//Construir sin tarea test que se ejecutó previamente
-				sh 'gradle --b ./build.gradle build -x test'
+				sh 'gradle build'
 			}
 		}
 		stage('Static Code Analysis') {
