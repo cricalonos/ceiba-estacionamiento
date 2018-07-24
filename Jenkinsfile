@@ -28,6 +28,7 @@ pipeline {
 				'Git_Centos', submoduleCfg: [], userRemoteConfigs: [[credentialsId:
 				'GitHub_cricalonos', url:
 				'https://github.com/cricalonos/ceiba-estacionamiento']]])
+				sh 'gradle clean'
 			}
 		}
 		stage('Unit Tests') {
